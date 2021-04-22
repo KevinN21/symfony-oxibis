@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <style>
+      .minor { color: #ccc }
+    </style>
+  </head>
+  <body>
+    <h1>{{ title }}</h1>
+
+    <p>Lorem Elsass ipsum flammekueche Salu bissame yeuh. consectetur Miss Dahlias lacus tchao bissame <strong>{{ title }}</strong> adipiscing turpis elit DNA, salu bredele Racing. quam, Oberschaeffolsheim hopla </p>
+    <p> ornare senectus sit varius placerat dignissim réchime purus vielmols, schnaps <strong>{{ title }}</Strong> geïz Huguette dui amet, eleifend kartoffelsalad s'guelt sit libero. schneck tellus kougelhopf risus, tellus sit Spätzle sagittis vulputate lotto-owe auctor, nüdle picon bière</p>
+
+    <h2>Etudiants</h2>
+    <ul>
+      {% for student in students %}
+
+        {% if student.age < 18  %}
+          {# <li><strong>{{ student.name }} ({{ student.job }})</Strong></li> #}
+          <li class="minor" style="font-weight:bold">{{ student.name }} ({{ student.job }})</li>
+        {% else %}
+          <li>{{ student.name }} ({{ student.job }})</li>
+        {% endif %}
+
+      {% endfor %}
+    </ul>
+  </body>
+</html>
+

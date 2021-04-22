@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}{% endblock %}
+
+{% block body %}
+
+<h2>Démo 13</h2>
+
+{# 
+composer require symfony/asset
+asset() => meillleure pratique 
+#}
+<img src="{{ asset('img/demo13.jpg') }}" alt="">
+
+
+<h3>{{ student.name }}</h3>
+<img src="{{student.img}}" alt="{{student.name}}">
+<p>Job: {{ student.job }}, âge: {{ student.age }} ans</p>
+
+<p>
+  <a href="{{ url('demo12') }}">Tous les étudiants</a>
+</p>
+
+{% endblock %}

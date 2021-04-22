@@ -137,8 +137,68 @@ class DemoController extends AbstractController
   /**
    * @Route("/demo10", name="demo10")
    */
-  public function demo10()
+  public function demo10(): Response
   {
     return $this->render('demo10.html.twig');
+  }
+
+    /**
+   * @Route("/demo11", name="demo11")
+   */
+  public function demo11(): Response
+  {
+    $title = "Démo 11";
+
+    // datasource
+    $students = [
+      ["name" => "Anthony", "job" => "dev", "age" => 14],
+      ["name" => "Kevin", "job" => "dev", "age" => 49],
+      ["name" => "Christophe", "job" => "prof", "age" => 98]
+    ];
+
+    return $this->render('demo11.html.twig', [
+      'title' => $title,
+      'students' => $students
+    ]);
+  }
+
+  /**
+   * @Route("/demo12", name="demo12")
+   */
+  public function demo12(): Response
+  {
+    // datasource
+    $students = [
+      ["name" => "Anthony", "job" => "dev", "age" => 14],
+      ["name" => "Kevin", "job" => "dev", "age" => 49],
+      ["name" => "Christophe", "job" => "prof", "age" => 98]
+    ];
+
+    return $this->render('demo12.html.twig', [
+      'students' => $students
+    ]);
+  }
+
+  /**
+   * @Route("/demo13/{studentId}", name="demo13")
+   */
+  public function demo13($studentId): Response
+  {
+    // datasource
+    $students = [
+      ["name" => "Anthony", "job" => "dev", "age" => 14, "img" => "https://picsum.photos/75"],
+      ["name" => "Kevin", "job" => "dev", "age" => 49, "img" => "https://picsum.photos/75"],
+      ["name" => "Christophe", "job" => "prof", "age" => 98, "img" => "https://picsum.photos/75"]
+    ];
+
+    $index = $studentId - 1;
+
+    if ($index > count($students)) {
+      return new Response("Requête non valide...");
+    }
+
+    return $this->render('demo13.html.twig', [
+      'student' => $students[$index]
+    ]);
   }
 }

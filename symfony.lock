@@ -1,4 +1,7 @@
 {
+    "symfony/asset": {
+        "version": "v5.2.4"
+    },
     "symfony/translation-contracts": {
         "version": "v2.4.0"
     },
