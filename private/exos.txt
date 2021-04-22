@@ -1,0 +1,11 @@
+/*
+Exo 1
+Temps estimé: 10 minutes
+*/
+Créer un contrôleur "ExoController"
+
+Créer une route exos/exo1 (annotation + méthode associée)
+Cette route devra récupérer un paramètre "num" dans l'url
+La réponse retournée au client sera la valeur de "num" au carrée
+Exemple: si num=4, réponse => 16
+/*
