@@ -1,1 +1,1 @@
-coucou, tout va bien
+<?php coucou, tout va bien ?>

@@ -1,5 +1,7 @@
 <?php
 namespace App\Controller;
+
+use App\Custom\Proverb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -201,4 +203,21 @@ class DemoController extends AbstractController
       'student' => $students[$index]
     ]);
   }
+
+  /**
+   * @Route("/demo14", name="demo14")
+   */
+  public function demo14(): Response
+  {
+    $p1 = new Proverb("Pierre qui roule n'amasse pas mousse", "fr");
+    $p2 = new Proverb("Tra dire e il fare c'è in mezzo il mare", "it");
+    $p3 = new Proverb("Ad astra per aspera", "la");
+
+    $proverbs = [$p1, $p2, $p3];
+
+    return $this->render('demo14.html.twig', [
+      'proverbs' => $proverbs
+    ]);
+  }
+
 }

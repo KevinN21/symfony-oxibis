@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>Ajout d'un étudiant</h2>
+
+<form method="POST">
+  <input name="name" type="text" placeholder="nom" />
+  Job:
+  <select name="job">
+    <option>Dev</option>
+    <option>Prof</option>
+  </select>
+  Age:
+  <select name="age">
+    {% for age in range(6, 100) %}
+    <option>{{age}}</option>
+    {% endfor %}
+  </select>
+  <button class="btn btn-primary">Enregistrer</button>
+</form>
+{% endblock %}

@@ -8,7 +8,12 @@ th { color: orange}
 
 {% block body %}
 
-<h2>Démo 12</h2>
+{% include 'includes/banner.html.twig' %}
+{% set num = -120 %}
+<h2>Démo {{ num|abs }}</h2>
+
+<p>Nombre d'étudiants: {{ students|length }}</p>
+<p>L'étudiant du mois: {{ random(students).name }}
 
 <table class="table table-bordered table-striped">
   <thead>
@@ -22,7 +27,7 @@ th { color: orange}
     {% for student in students %}
       <tr>
         <td>
-          <a href="/demo13/{{loop.index}}">{{ student.name }}</a>
+          <a href="/demo13/{{loop.index}}">{{ student.name|upper }}</a>
         </td>
         <td>{{ student.job }}</td>
         <td>{{ student.age }}</td>
