@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>Nous avons rencontré des erreurs</h2>
+
+<ul>
+  {% for error in errors %}
+    <li>Champ: {{error.field}} => {{error.errorMessage}}</li>
+  {% endfor %}
+</ul>
+
+{# <p>
+  <a href="{{ url('student_form') }}">Retour au formulaire</a>
+</p> #}
+
+{% endblock %}

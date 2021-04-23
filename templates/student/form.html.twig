@@ -1,21 +1,67 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h2>Ajout d'un étudiant</h2>
 
-<form method="POST">
-  <input name="name" type="text" placeholder="nom" />
-  Job:
-  <select name="job">
-    <option>Dev</option>
-    <option>Prof</option>
-  </select>
-  Age:
-  <select name="age">
-    {% for age in range(6, 100) %}
-    <option>{{age}}</option>
-    {% endfor %}
-  </select>
-  <button class="btn btn-primary">Enregistrer</button>
-</form>
+{% set jobs = ['Dev', 'Prof', 'Admin', 'Tester'] %}
+
+{% if student is defined %}
+
+  <h2>Mettre à jour {{student.name}}</h2>
+
+  <form method="POST" action="{{ url('student_new') }}">
+    <input name="name" type="text" placeholder="nom" 
+      value="{{student.name}}" />
+    Job:
+    <select name="job">
+      {% for job in jobs %}
+        {% if job == student.job %}
+          <option selected>{{job}}</option>
+        {% else %}
+          <option>{{job}}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+    Age:
+    <select name="age">
+      {% for age in range(6, 100) %}
+        {% if age == student.age %}
+          <option selected>{{age}}</option>
+        {% else %}
+          <option>{{age}}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+    <input type="hidden" name="studentId" value="{{student.id}}" />
+    <button class="btn btn-primary">Mettre à jour</button>
+  </form>
+
+{% else %}
+
+  <h2>Ajout d'un étudiant</h2>
+
+  <form method="POST" action="{{ url('student_new') }}">
+    <input name="name" type="text" placeholder="nom" />
+    Job:
+    <select name="job">
+      {% for job in jobs %}
+        <option>{{job}}</option>
+      {% endfor %}
+    </select>
+    Age:
+    <select name="age">
+      {% for age in range(6, 100) %}
+      <option>{{age}}</option>
+      {% endfor %}
+    </select>
+    <button class="btn btn-primary">Enregistrer</button>
+  </form>
+
+{% endif %}
+
+{% endblock %}
+
+{% block js %}
+<script>
+  console.log('student form');
+</script>
 {% endblock %}

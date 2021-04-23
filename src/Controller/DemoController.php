@@ -141,7 +141,7 @@ class DemoController extends AbstractController
    */
   public function demo10(): Response
   {
-    return $this->render('demo10.html.twig');
+    return $this->render('demo/demo10.html.twig');
   }
 
     /**
@@ -158,7 +158,7 @@ class DemoController extends AbstractController
       ["name" => "Christophe", "job" => "prof", "age" => 98]
     ];
 
-    return $this->render('demo11.html.twig', [
+    return $this->render('demo/demo11.html.twig', [
       'title' => $title,
       'students' => $students
     ]);
@@ -176,7 +176,7 @@ class DemoController extends AbstractController
       ["name" => "Christophe", "job" => "prof", "age" => 98]
     ];
 
-    return $this->render('demo12.html.twig', [
+    return $this->render('demo/demo12.html.twig', [
       'students' => $students
     ]);
   }
@@ -199,7 +199,7 @@ class DemoController extends AbstractController
       return new Response("Requête non valide...");
     }
 
-    return $this->render('demo13.html.twig', [
+    return $this->render('demo/demo13.html.twig', [
       'student' => $students[$index]
     ]);
   }
@@ -215,7 +215,7 @@ class DemoController extends AbstractController
 
     $proverbs = [$p1, $p2, $p3];
 
-    return $this->render('demo14.html.twig', [
+    return $this->render('demo/demo14.html.twig', [
       'proverbs' => $proverbs
     ]);
   }

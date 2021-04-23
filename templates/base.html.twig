@@ -8,13 +8,20 @@
         <meta charset="UTF-8">
         <title>Formation Symfony</title>
         <link rel="stylesheet" href="{{ bootstrap }}">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         {% block css %}{% endblock %}
     </head>
     <body>
+        {% include 'includes/header.html.twig' %}
+        
         {% block body %}{% endblock %}
 
         {% if footer %}
             {% include 'includes/' ~ footerName ~ '.html.twig' %}
         {% endif %}
+
+        <script src="{{ asset('js/main.js') }}"></script>
+
+        {% block js %}{% endblock %}
     </body>
 </html>

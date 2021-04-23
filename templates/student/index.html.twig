@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>Etudiants</h2>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Job</th>
+      <th>Age</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in students %}
+      <tr>
+        <td>
+          <a href="{{ url('student_show', { 'id':student.id }) }}">{{ student.name|upper }}</a>
+        </td>
+        <td>{{ student.job }}</td>
+        <td>{{ student.age }}</td>
+        <td>
+          <a href="{{ url('student_edit', { 'id':student.id }) }}">Modifier</a>
+          <a href="{{ url('student_delete', { 'id':student.id }) }}">Supprimer</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
