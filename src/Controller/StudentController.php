@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Student;
+use App\Entity\Team;
 use App\Repository\StudentRepository;
+use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,12 +16,23 @@ class StudentController extends AbstractController
     /**
      * @Route("/student", name="student_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(Request $req): Response
     {
         // Récupération d'un repository
         // permettant d'interroger (LECTURE) l'entité ciblée
         $repo = $this->getDoctrine()->getRepository(Student::class);
-        $students = $repo->findAll();
+        //$students = $repo->findAll();
+
+        $job = $req->query->get('job');
+        $name = $req->query->get('name');
+
+        $criteria = [];
+
+        if ($job && $job !== 'all') {
+            $criteria = ['job' => $job];
+        }
+
+        $students = $repo->findBy($criteria, ['name' => 'ASC']);
 
         return $this->render('student/index.html.twig', [
             'students' => $students
@@ -67,7 +80,7 @@ class StudentController extends AbstractController
         $name = $req->request->get('name');
         $job = $req->request->get('job');
         $age = $req->request->get('age');
-        
+  
         // accès à la valeur du champ caché
         // tranmise par formulaire
         $studentId = $req->request->get('studentId');
@@ -110,6 +123,11 @@ class StudentController extends AbstractController
             
             $student = $repo->find($studentId);
             // ToDo: check $student
+
+            // mise à jour de l'équipe
+            $teamId = $req->request->get('teamId');
+            $teamRepo = $this->getDoctrine()->getRepository(Team::class);
+            $student->setTeam($teamRepo->find($teamId));
         }
 
         $student->setName($name);
@@ -128,13 +146,18 @@ class StudentController extends AbstractController
     /**
      * @Route("/student/{id}/edit", name="student_edit", methods={"GET"})
      */
-    public function edit($id, StudentRepository $repo): Response
+    public function edit($id, 
+        StudentRepository $studentRepo,
+        TeamRepository $teamRepo): Response
     {
-        $student = $repo->find($id);
+        $student = $studentRepo->find($id);
         // ToDo: check $student
 
+        $teams = $teamRepo->findAll();
+
         return $this->render('student/form.html.twig', [
-            'student' => $student
+            'student' => $student,
+            'teams' => $teams
         ]);
     }
 

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <ul>
+    {% for team in teams %}
+
+        {% set numStudents = team.students|length %}
+        
+        <li>
+        {{ team.name }} - 
+        {{ team.year|date('Y') }} - 
+        
+        {% if numStudents > 0 %}
+            <span>{{numStudents}} étudiant(s)</span>
+        {% else %}
+            <span>Aucun étudiant</span>
+        {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

@@ -4,7 +4,18 @@
 
 {% block body %}
 
-<h2>{{ student.name }}</h2>
-<p>Job: {{ student.job }}, âge: {{ student.age }} ans</p>
+<div class="card" style="width:600px">
+  <img class="card-img-top" src="https://picsum.photos/600/100" alt="{{ student.name}}">
+  <div class="card-body">
+    <h2 class="card-title">{{ student.name }}</h2>
+    <p class="card-text">Job: {{ student.job }}, âge: {{ student.age }} ans</p>
+    
+    {% if student.team %}
+      <p class="card-text">Equipe: {{student.team.name}}</p>
+    {% else %}
+      <p class="card-text">N'appartient à aucune équipe</p>
+    {% endif%}
+  </div>
+</div>
 
 {% endblock %}

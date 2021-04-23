@@ -31,8 +31,18 @@
         {% endif %}
       {% endfor %}
     </select>
+    Equipe:
+    <select name="teamId">
+      {% for team in teams %}
+        {% if student.team and team.id == student.team.id %}
+          <option selected value="{{team.id}}">{{team.name}}</option>
+        {% else %}
+          <option value="{{team.id}}">{{team.name}}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
     <input type="hidden" name="studentId" value="{{student.id}}" />
-    <button class="btn btn-primary">Mettre à jour</button>
+    <button class="btn btn-primary btn-sm">Mettre à jour</button>
   </form>
 
 {% else %}
@@ -40,7 +50,7 @@
   <h2>Ajout d'un étudiant</h2>
 
   <form method="POST" action="{{ url('student_new') }}">
-    <input name="name" type="text" placeholder="nom" />
+    <input id="inputName" name="name" type="text" placeholder="nom" />
     Job:
     <select name="job">
       {% for job in jobs %}
@@ -53,7 +63,7 @@
       <option>{{age}}</option>
       {% endfor %}
     </select>
-    <button class="btn btn-primary">Enregistrer</button>
+    <button id="btnSave" class="btn btn-sm btn-primary" disabled>Enregistrer</button>
   </form>
 
 {% endif %}
@@ -62,6 +72,18 @@
 
 {% block js %}
 <script>
-  console.log('student form');
+  
+  (function() {
+
+    var inputName = document.getElementById('inputName');
+    var btnSave = document.getElementById('btnSave');
+
+    inputName.addEventListener('keyup', function(e) {
+      var inputValue = e.target.value;
+      btnSave.disabled = inputValue.length < 4;
+    })
+
+  })() // IIFE
+
 </script>
 {% endblock %}

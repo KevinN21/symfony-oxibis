@@ -1,0 +1,24 @@
+{% set jobs = ['Dev', 'Prof', 'Admin', 'Tester'] %}
+
+<form method="GET">
+
+  Job
+  <select name="job">
+    <option value="all">Tous</option>
+    {% for job in jobs %}
+      <option>{{job}}</option>
+    {% endfor %}
+  </select>
+
+  Equipe
+
+  {{ render(controller('App\\Controller\\TeamController::allTeams')) }}
+
+  {# ToDo: alimenter le select avec les équipe provenant du contrôleur ci-dessus #}
+  <select></select>
+
+  <input name="name" type="text" placeholder="rechercher dans le nom" />
+
+  <button class="btn btn-sm btn-outline-primary">Filtrer</button>
+
+</form>
