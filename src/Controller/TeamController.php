@@ -43,6 +43,10 @@ class TeamController extends AbstractController
     {
         // ToDo: retourne un tableau de Team à destination
         // de templates twig...
-        return new Response('allTeams');
+        //return new Response('allTeams');
+
+        return $this->render('team/_teams.html.twig', [
+            'teams' => ['aaa', 'bbb', 'ccc']
+        ]);
     }
 }
