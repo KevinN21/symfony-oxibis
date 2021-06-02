@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Team;
 use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,11 +46,22 @@ class TeamController extends AbstractController
 
         $form = $this->createFormBuilder($team)
             ->add('name', TextType::class, ['label' => 'Nom'])
-            ->add('year', TextType::class, ['label' => 'Année'])
+            ->add('year', DateType::class, ['widget' => 'choice'])
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
             ->getForm();
 
         // mise en relation de la requête et du formulaire
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            //$team = $form->getData();
+            //dd($team);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($team);
+            $em->flush();
+
+            return $this->redirectToRoute('team_index');
+        }
 
         return $this->render('team/new.html.twig', [
             'form' => $form->createView()

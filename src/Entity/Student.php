@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\StudentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=StudentRepository::class)
@@ -29,6 +30,12 @@ class Student
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Assert\Range(
+     *  min = 10,
+     *  max = 90,
+     *  notInRangeMessage = "Votre âge doit être compris entre {{ min }} et {{ max }} ans"
+     * )
      */
     private $age;
 

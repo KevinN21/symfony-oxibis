@@ -29,3 +29,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    
+    # attribution de valeurs aux arguments des constructeurs des classes
+    # instanciées en auto-wiring
+    App\Service\CalculatorService:
+        arguments:
+            $taux: 0.1

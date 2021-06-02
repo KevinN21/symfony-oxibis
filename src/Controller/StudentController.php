@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Student;
 use App\Entity\Team;
+use App\Form\StudentType;
 use App\Repository\StudentRepository;
 use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class StudentController extends AbstractController
 {
@@ -78,9 +80,9 @@ class StudentController extends AbstractController
 
 
     /**
-     * @Route("/student", name="student_new", methods={"POST"})
+     * @Route("/student", name="student_new_v1", methods={"POST"})
      */
-    public function new(Request $req): Response
+    public function new_v1(Request $req): Response
     {
         // récupération des inputs
         $name = $req->request->get('name');
@@ -180,5 +182,34 @@ class StudentController extends AbstractController
         $manager->flush();
 
         return $this->redirectToRoute('student_index');
+    }
+
+    /**
+     * @Route("/student/new", name="student_new")
+     */
+    public function new(Request $request, ValidatorInterface $validator)
+    {
+        $student = new Student();
+
+        // demo validator service
+        // $student->setAge(600);
+        // $errors = $validator->validate($student);
+        // dd($errors); // violations: array:1
+
+
+        $form = $this->createForm(StudentType::class, $student);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($student);
+            $em->flush();
+            return $this->redirectToRoute('student_index');
+        }
+
+        return $this->render('student/new.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

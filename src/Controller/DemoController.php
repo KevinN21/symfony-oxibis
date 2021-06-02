@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Custom\Proverb;
+use App\Service\CalculatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,6 +11,20 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DemoController extends AbstractController
 {
+  private $calculatorSrv;
+
+  // public function __construct()
+  // {
+  //   DI sans auto-wiring
+  //   $this->calculatorSrv = new CalculatorService(0.5);
+  // }
+
+  public function __construct(CalculatorService $calculatorSrv)
+  {
+    // DI avec auto-wiring
+    $this->calculatorSrv = $calculatorSrv;
+  }
+
   public function demo1()
   {
     //$res = new Response("demo1");
@@ -218,6 +233,35 @@ class DemoController extends AbstractController
     return $this->render('demo/demo14.html.twig', [
       'proverbs' => $proverbs
     ]);
+  }
+
+  /**
+   * @Route("/demo15", name="demo15")
+   */
+  public function demo15(CalculatorService $calculator, Request $request): Response
+  {
+
+    $ht = $request->query->get('ht');
+    return new Response($calculator->tva($ht));
+  }
+
+  /**
+   * @Route("/demo16", name="demo16")
+   */
+  public function demo16(Request $request): Response
+  {
+    $calculator = new CalculatorService(0.5);
+    $ht = $request->query->get('ht');
+    return new Response($calculator->tva($ht));
+  }
+
+  /**
+   * @Route("/demo17", name="demo17")
+   */
+  public function demo17(Request $request): Response
+  {
+    $ht = $request->query->get('ht');
+    return new Response($this->calculatorSrv->tva($ht));
   }
 
 }
