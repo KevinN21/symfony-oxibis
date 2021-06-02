@@ -33,6 +33,12 @@ class StudentController extends AbstractController
         }
 
         $students = $repo->findBy($criteria, ['name' => 'ASC']);
+        
+        // Exemples de finders personnalisés
+        //$students = $repo->findAllBis();
+        //$students = $repo->findByTeam('Experts');
+        //$students = $repo->findMajors();
+        //$students = $repo->findInName('o');
 
         return $this->render('student/index.html.twig', [
             'students' => $students

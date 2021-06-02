@@ -22,29 +22,55 @@ class StudentRepository extends ServiceEntityRepository
     // /**
     //  * @return Student[] Returns an array of Student objects
     //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Student
+    
+    public function findAllBis()
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $qb = $this->createQueryBuilder('s');
+        return $qb->getQuery()->getResult();
     }
-    */
+
+    // select * from student where ...
+    // besoin de joindre les entités Student et Team
+    public function findByTeam($teamName)
+    {
+        $students = $this->createQueryBuilder('s')
+                ->join('s.team', 't')
+                ->where('t.name = :teamName')
+                ->setParameter('teamName', $teamName)
+                ->orderBy('s.name', 'ASC')
+                ->getQuery()
+                ->getResult()
+                ;
+
+        return $students;
+    }
+
+    public function findMajors()
+    {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            'SELECT s FROM App\Entity\Student s
+              WHERE s.age >= 18
+              ORDER BY s.name ASC');
+
+        return $query->getResult();
+    }
+
+    public function findInName($str)
+    {
+        $em = $this->getEntityManager();
+
+        $query = $em->createQuery(
+            'SELECT s FROM App\Entity\Student s
+                WHERE s.name LIKE :str
+            '
+        )->setParameter('str', '%' . $str . '%');
+
+        return $query->getResult();
+    }
+
+    
+
 }

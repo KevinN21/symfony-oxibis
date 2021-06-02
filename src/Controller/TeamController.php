@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Team;
 use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,20 +26,34 @@ class TeamController extends AbstractController
     /**
      * @Route("/team/new", name="team_new")
      */
-    public function new(): Response
+    public function new(Request $request): Response
     {
-        $dt = new \DateTime(); // renvoie le datetime courant
-        $dt->setDate(2018, 6, 15);
+        // $dt = new \DateTime(); // renvoie le datetime courant
+        // $dt->setDate(2021, 5, 10);
+
+        // $team = new Team();
+        // $team->setName("Les 4 fantastiques");
+        // $team->setYear($dt);
+
+        // $manager = $this->getDoctrine()->getManager();
+        // $manager->persist($team);
+        // $manager->flush();
+
+        // return new Response($team->getId());
 
         $team = new Team();
-        $team->setName("Les Barjots");
-        $team->setYear($dt);
 
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($team);
-        $manager->flush();
+        $form = $this->createFormBuilder($team)
+            ->add('name', TextType::class, ['label' => 'Nom'])
+            ->add('year', TextType::class, ['label' => 'Année'])
+            ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
+            ->getForm();
 
-        return new Response($team->getId());
+        // mise en relation de la requête et du formulaire
+
+        return $this->render('team/new.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     public function allTeams(TeamRepository $repo): Response
@@ -45,8 +62,10 @@ class TeamController extends AbstractController
         // de templates twig...
         //return new Response('allTeams');
 
+        $teams = $repo->findAll();
+
         return $this->render('team/_teams.html.twig', [
-            'teams' => ['aaa', 'bbb', 'ccc']
+            'teams' => $teams
         ]);
     }
 }

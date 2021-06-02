@@ -1,3 +1,5 @@
 <select name="team">
-  <option>{{ teams[0] }}</option>
+  {% for team in teams %}
+    <option>{{ team.name }}</option>
+  {% endfor %}
 </select>
