@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h2>Etudiants</h2>
+<h2>{% trans %}Students{% endtrans %}</h2>
 
 {% include 'student/search.html.twig' %}
 
@@ -11,7 +11,7 @@
       <th>Nom</th>
       <th>Job</th>
       <th>Age</th>
-      <th>Equipe</th>
+      <th>{% trans %}Team{% endtrans %}</th>
       <th>Actions</th>
     </tr>
   </thead>

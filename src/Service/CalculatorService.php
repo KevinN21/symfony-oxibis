@@ -16,4 +16,9 @@ class CalculatorService
     $ttc = $ht + ($ht * $this->taux);
     return $ttc;
   }
+
+  public function square($x)
+  {
+    return $x * $x;
+  }
 }

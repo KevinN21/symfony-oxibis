@@ -1,0 +1,7 @@
+state:
+  happy: I am happy
+  nervous: I am nervous
+
+symfony:
+  is:
+    amazing: Symfony is amazing

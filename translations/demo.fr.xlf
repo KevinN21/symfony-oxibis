@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="7luJ2fQ" resname="state.happy">
+        <source>state.happy</source>
+        <target>Je suis heureux</target>
+      </trans-unit>
+      <trans-unit id="ls_bnZL" resname="state.nervous">
+        <source>state.nervous</source>
+        <target>Je suis nerveux</target>
+      </trans-unit>
+      <trans-unit id="1Fk_W.5" resname="symfony.is.amazing">
+        <source>symfony.is.amazing</source>
+        <target>Symfony is incroyable</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

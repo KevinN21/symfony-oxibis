@@ -2,12 +2,17 @@
 namespace App\Controller;
 
 use App\Custom\Proverb;
+use App\Event\TestEvent;
 use App\Service\CalculatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DemoController extends AbstractController
 {
@@ -81,6 +86,8 @@ class DemoController extends AbstractController
       }
     }
 
+    $res->headers->set('X-Token', md5("hello"));
+    $res->setContent('<html><head><title>Demo4</title></head><body></body></html>');
     return $res;
   }
 
@@ -262,6 +269,71 @@ class DemoController extends AbstractController
   {
     $ht = $request->query->get('ht');
     return new Response($this->calculatorSrv->tva($ht));
+  }
+
+  /**
+   * @Route("/demo18", name="demo18")
+   */
+  public function demo18(Request $request, EventDispatcherInterface $dispatcher): Response
+  {
+
+    $event = new TestEvent("coucou");
+    $dispatcher->dispatch($event, TestEvent::NAME);
+
+    return $this->render('demo/demo18.html.twig');
+  }
+
+  /**
+   * @Route("/demo19", name="demo19")
+   */
+  public function demo19(Request $request, TranslatorInterface $translator): Response
+  {
+    //$t = $translator->trans('hello');
+    //$t = $translator->trans('state.happy', [], 'demo');
+    $t = $translator->trans('say_hello', ['student' => 'Chris']);
+    return new Response($t);
+  }
+
+  /**
+   * @Route("/demo20", name="demo20")
+   */
+  public function demo20(): Response
+  {
+    $message = new TranslatableMessage('Students');
+
+    return $this->render('demo/demo20.html.twig', [
+      'message' => $message
+    ]);
+  }
+
+  /**
+   * @Route(
+   *  "{_locale}/demo21", 
+   *  name="demo21", 
+   *  requirements={"_locale":"en|fr|it"})
+   */
+  public function demo21(): Response
+  {
+    $message = new TranslatableMessage('Students');
+
+    return $this->render('demo/demo20.html.twig', [
+      'message' => $message
+    ]);
+  }
+
+    /**
+   * @Route({
+   *  "en": "/demo22/happy-new-year",
+   *  "fr": "/demo22/joyeuse-annee"
+   * }, name="demo22")
+   */
+  public function demo22(
+    Request $request, UrlGeneratorInterface $urlGenerator): Response
+  {
+    $locale = $request->getLocale();
+    $url = $urlGenerator->generate('demo22', ['_locale' => $locale]);
+    //dd($url);
+    return new Response($url);
   }
 
 }

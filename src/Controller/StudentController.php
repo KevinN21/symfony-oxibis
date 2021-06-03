@@ -205,7 +205,7 @@ class StudentController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($student);
             $em->flush();
-            return $this->redirectToRoute('student_index');
+            //return $this->redirectToRoute('student_index');
         }
 
         return $this->render('student/new.html.twig', [
